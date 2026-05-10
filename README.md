@@ -1,10 +1,13 @@
 ---
-title: Verdant Island Gov Search P3dn4
-emoji: 📈
-colorFrom: pink
+title: Verdant Island Gov Search 🏝️
+colorFrom: red
 colorTo: gray
 sdk: static
-pinned: false
+emoji: 📚
+tags:
+  - deepsite-v4
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+# Verdant Island Gov Search 🏝️
+
+This project has been created with [DeepSite](https://deepsite.hf.co) AI Vibe Coding.

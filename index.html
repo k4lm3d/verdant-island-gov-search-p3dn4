@@ -1,19 +1,484 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>My static Space</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="card">
-			<h1>Welcome to your static Space!</h1>
-			<p>You can modify this app directly by editing <i>index.html</i> in the Files and versions tab.</p>
-			<p>
-				Also don't forget to check the
-				<a href="https://huggingface.co/docs/hub/spaces" target="_blank">Spaces documentation</a>.
-			</p>
-		</div>
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verdant Island Government — Official Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            verdant: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            ocean: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+              950: '#082f49',
+            },
+            sand: {
+              50: '#fefce8',
+              100: '#fef9c3',
+              200: '#fef08a',
+              300: '#fde047',
+              400: '#facc15',
+              500: '#eab308',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-body bg-verdant-950 text-white min-h-screen flex flex-col">
+
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Logo & Site Name -->
+        <a href="#" onclick="goHome(event)" class="flex items-center gap-3 group">
+          <div class="relative">
+            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-verdant-400 to-ocean-500 flex items-center justify-center shadow-lg shadow-verdant-500/30 group-hover:shadow-verdant-500/50 transition-shadow duration-300">
+              <i data-lucide="palmtree" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+            </div>
+            <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-sand-400 rounded-full border-2 border-verdant-950"></div>
+          </div>
+          <div class="hidden sm:block">
+            <h1 class="text-base sm:text-lg font-bold text-white leading-tight">Verdant Island</h1>
+            <p class="text-[10px] sm:text-xs text-verdant-300 font-medium tracking-wider uppercase">Government Portal</p>
+          </div>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <div class="hidden md:flex items-center gap-1">
+          <a href="#" onclick="goHome(event)" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200">Home</a>
+          <a href="#about-section" onclick="scrollToSection(event, 'about-section')" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200">About</a>
+          <a href="#contact-section" onclick="scrollToSection(event, 'contact-section')" class="nav-link px-4 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200">Contact</a>
+          <div class="w-px h-6 bg-white/10 mx-2"></div>
+          <a href="#" onclick="goHome(event); setTimeout(() => document.getElementById('search-input').focus(), 300)" class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-verdant-600/80 hover:bg-verdant-600 text-white transition-all duration-200 backdrop-blur-sm">
+            <i data-lucide="search" class="w-4 h-4"></i>
+            Search
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden relative w-10 h-10 rounded-lg flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200">
+          <i data-lucide="menu" class="w-5 h-5" id="menu-icon-open"></i>
+          <i data-lucide="x" class="w-5 h-5 hidden" id="menu-icon-close"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden hidden opacity-0 transform -translate-y-2 transition-all duration-300">
+      <div class="mx-4 mb-4 p-4 rounded-2xl bg-verdant-900/95 backdrop-blur-xl border border-white/10 shadow-xl">
+        <a href="#" onclick="goHome(event); toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200">
+          <i data-lucide="home" class="w-5 h-5"></i>
+          <span class="text-sm font-medium">Home</span>
+        </a>
+        <a href="#about-section" onclick="scrollToSection(event, 'about-section'); toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200">
+          <i data-lucide="info" class="w-5 h-5"></i>
+          <span class="text-sm font-medium">About</span>
+        </a>
+        <a href="#contact-section" onclick="scrollToSection(event, 'contact-section'); toggleMobileMenu()" class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 transition-all duration-200">
+          <i data-lucide="mail" class="w-5 h-5"></i>
+          <span class="text-sm font-medium">Contact</span>
+        </a>
+        <div class="h-px bg-white/10 my-2"></div>
+        <a href="#" onclick="goHome(event); toggleMobileMenu(); setTimeout(() => document.getElementById('search-input').focus(), 300)" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-verdant-600/80 text-white transition-all duration-200">
+          <i data-lucide="search" class="w-5 h-5"></i>
+          <span class="text-sm font-medium">Search Portal</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col">
+
+    <!-- HOME VIEW -->
+    <section id="home-view" class="flex-1 flex flex-col items-center justify-center relative overflow-hidden min-h-screen">
+      <!-- Animated Background -->
+      <div class="absolute inset-0 bg-gradient-to-b from-verdant-950 via-ocean-950 to-verdant-950"></div>
+      
+      <!-- Decorative Elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <!-- Gradient Orbs -->
+        <div class="orb orb-1 absolute w-[500px] h-[500px] rounded-full bg-verdant-500/20 blur-[100px]"></div>
+        <div class="orb orb-2 absolute w-[400px] h-[400px] rounded-full bg-ocean-500/15 blur-[80px]"></div>
+        <div class="orb orb-3 absolute w-[300px] h-[300px] rounded-full bg-sand-400/10 blur-[60px]"></div>
+        
+        <!-- Floating Particles -->
+        <div class="particle particle-1 absolute w-2 h-2 rounded-full bg-verdant-400/40"></div>
+        <div class="particle particle-2 absolute w-1.5 h-1.5 rounded-full bg-ocean-300/40"></div>
+        <div class="particle particle-3 absolute w-1 h-1 rounded-full bg-sand-300/40"></div>
+        <div class="particle particle-4 absolute w-2.5 h-2.5 rounded-full bg-verdant-300/30"></div>
+        <div class="particle particle-5 absolute w-1.5 h-1.5 rounded-full bg-ocean-400/30"></div>
+        
+        <!-- Grid Lines -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 80px 80px;"></div>
+      </div>
+
+      <!-- Content -->
+      <div class="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 text-center">
+        <!-- Emblem -->
+        <div class="mb-8 sm:mb-10 inline-flex items-center justify-center">
+          <div class="relative">
+            <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-verdant-400 via-verdant-500 to-ocean-500 flex items-center justify-center shadow-2xl shadow-verdant-500/30 rotate-3 hover:rotate-0 transition-transform duration-500">
+              <i data-lucide="palmtree" class="w-10 h-10 sm:w-14 sm:h-14 text-white"></i>
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-sand-400 border-3 border-verdant-950 flex items-center justify-center shadow-lg">
+              <i data-lucide="star" class="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-verdant-900"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <h2 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+          Verdant <span class="bg-gradient-to-r from-verdant-300 via-verdant-400 to-ocean-400 bg-clip-text text-transparent">Island</span>
+        </h2>
+        <p class="text-base sm:text-lg md:text-xl text-white/50 font-light mb-10 sm:mb-14 tracking-wide">
+          Your gateway to government services & information
+        </p>
+
+        <!-- Search Box -->
+        <form id="search-form" onsubmit="handleSearch(event)" class="relative group">
+          <div class="relative">
+            <!-- Glow Effect -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-verdant-500/50 via-ocean-500/50 to-verdant-500/50 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+            
+            <div class="relative flex items-center bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden group-focus-within:border-verdant-400/50 group-focus-within:bg-white/15 transition-all duration-300 shadow-2xl shadow-black/20">
+              <div class="pl-4 sm:pl-6 text-white/40 group-focus-within:text-verdant-400 transition-colors duration-300">
+                <i data-lucide="search" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+              </div>
+              <input 
+                id="search-input"
+                type="text" 
+                placeholder="Search government services, departments, forms..." 
+                autocomplete="off"
+                class="w-full bg-transparent text-white placeholder-white/30 text-sm sm:text-base md:text-lg py-4 sm:py-5 px-3 sm:px-4 focus:outline-none font-light"
+              >
+              <button type="submit" class="m-2 sm:m-2.5 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-verdant-500 to-verdant-600 hover:from-verdant-400 hover:to-verdant-500 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-verdant-600/30 hover:shadow-verdant-500/40 active:scale-95 flex items-center gap-2">
+                <span class="hidden sm:inline">Search</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Quick Links -->
+        <div class="mt-8 sm:mt-12">
+          <p class="text-xs text-white/30 uppercase tracking-widest mb-4 font-medium">Popular Searches</p>
+          <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
+            <button onclick="quickSearch('passport renewal')" class="quick-chip px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs sm:text-sm hover:bg-verdant-500/20 hover:border-verdant-500/30 hover:text-verdant-300 transition-all duration-200 backdrop-blur-sm">
+              Passport Renewal
+            </button>
+            <button onclick="quickSearch('tax filing')" class="quick-chip px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs sm:text-sm hover:bg-ocean-500/20 hover:border-ocean-500/30 hover:text-ocean-300 transition-all duration-200 backdrop-blur-sm">
+              Tax Filing
+            </button>
+            <button onclick="quickSearch('business registration')" class="quick-chip px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs sm:text-sm hover:bg-sand-400/20 hover:border-sand-400/30 hover:text-sand-300 transition-all duration-200 backdrop-blur-sm">
+              Business Registration
+            </button>
+            <button onclick="quickSearch('health services')" class="quick-chip px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs sm:text-sm hover:bg-verdant-500/20 hover:border-verdant-500/30 hover:text-verdant-300 transition-all duration-200 backdrop-blur-sm">
+              Health Services
+            </button>
+            <button onclick="quickSearch('driver license')" class="quick-chip px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/5 border border-white/10 text-white/50 text-xs sm:text-sm hover:bg-ocean-500/20 hover:border-ocean-500/30 hover:text-ocean-300 transition-all duration-200 backdrop-blur-sm">
+              Driver's License
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/20">
+        <i data-lucide="chevron-down" class="w-6 h-6"></i>
+      </div>
+    </section>
+
+    <!-- RESULTS VIEW -->
+    <section id="results-view" class="hidden flex-1 pt-24 sm:pt-28 pb-12 min-h-screen bg-gradient-to-b from-verdant-950 via-[#071a0e] to-verdant-950">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <!-- Search Bar (compact) -->
+        <form onsubmit="handleSearch(event)" class="mb-8 group">
+          <div class="flex items-center bg-white/10 backdrop-blur-xl border border-white/15 rounded-xl overflow-hidden group-focus-within:border-verdant-400/40 transition-all duration-300">
+            <div class="pl-4 text-white/40 group-focus-within:text-verdant-400 transition-colors duration-300">
+              <i data-lucide="search" class="w-5 h-5"></i>
+            </div>
+            <input 
+              id="search-input-results"
+              type="text" 
+              placeholder="Search again..." 
+              autocomplete="off"
+              class="w-full bg-transparent text-white placeholder-white/30 text-sm sm:text-base py-3 px-3 focus:outline-none"
+            >
+            <button type="submit" class="m-1.5 px-4 py-2 bg-verdant-600 hover:bg-verdant-500 text-white text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5">
+              <i data-lucide="search" class="w-3.5 h-3.5"></i>
+              <span class="hidden sm:inline">Search</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Results Header -->
+        <div id="results-header" class="mb-6">
+          <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-white" id="results-title">Search Results</h2>
+              <p class="text-sm text-white/40 mt-1" id="results-count"></p>
+            </div>
+            <button onclick="goHome(event)" class="flex items-center gap-2 text-sm text-verdant-400 hover:text-verdant-300 transition-colors duration-200">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Back to Home
+            </button>
+          </div>
+        </div>
+
+        <!-- Results List -->
+        <div id="results-list" class="space-y-3"></div>
+
+        <!-- No Results State -->
+        <div id="no-results" class="hidden text-center py-16 sm:py-24">
+          <div class="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-6">
+            <i data-lucide="search-x" class="w-10 h-10 text-white/20"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-white/70 mb-2">No results found</h3>
+          <p class="text-white/40 max-w-md mx-auto">We couldn't find anything matching your search. Try different keywords or browse our popular searches.</p>
+          <button onclick="goHome(event)" class="mt-6 px-5 py-2.5 bg-verdant-600 hover:bg-verdant-500 text-white text-sm font-medium rounded-xl transition-all duration-200">
+            Try a new search
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section (always in DOM, revealed from home) -->
+    <section id="about-section" class="py-16 sm:py-24 bg-gradient-to-b from-verdant-950 to-[#0a1f12] relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-72 h-72 bg-verdant-600/5 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-0 right-1/4 w-72 h-72 bg-ocean-600/5 rounded-full blur-[100px]"></div>
+      </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center mb-12 sm:mb-16">
+          <p class="text-xs uppercase tracking-widest text-verdant-400 font-semibold mb-3">About Our Island</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Government of Verdant Island</h2>
+          <p class="text-white/50 max-w-2xl mx-auto text-base sm:text-lg font-light">Serving our citizens with transparency, innovation, and aloha spirit since 1962.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <div class="group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:bg-white/[0.06] hover:border-verdant-500/20 transition-all duration-300">
+            <div class="w-12 h-12 rounded-xl bg-verdant-500/10 border border-verdant-500/20 flex items-center justify-center mb-5 group-hover:bg-verdant-500/20 transition-colors duration-300">
+              <i data-lucide="landmark" class="w-6 h-6 text-verdant-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Our Mission</h3>
+            <p class="text-white/40 text-sm leading-relaxed">To foster a thriving, sustainable island community through transparent governance, innovative public services, and unwavering commitment to our natural heritage.</p>
+          </div>
+          
+          <!-- Card 2 -->
+          <div class="group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:bg-white/[0.06] hover:border-ocean-500/20 transition-all duration-300">
+            <div class="w-12 h-12 rounded-xl bg-ocean-500/10 border border-ocean-500/20 flex items-center justify-center mb-5 group-hover:bg-ocean-500/20 transition-colors duration-300">
+              <i data-lucide="users" class="w-6 h-6 text-ocean-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Our People</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Home to 148,000 residents across 12 districts, Verdant Island celebrates a rich cultural tapestry woven from Pacific Islander, Asian, and European traditions.</p>
+          </div>
+          
+          <!-- Card 3 -->
+          <div class="group bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 sm:p-8 hover:bg-white/[0.06] hover:border-sand-400/20 transition-all duration-300">
+            <div class="w-12 h-12 rounded-xl bg-sand-400/10 border border-sand-400/20 flex items-center justify-center mb-5 group-hover:bg-sand-400/20 transition-colors duration-300">
+              <i data-lucide="leaf" class="w-6 h-6 text-sand-400"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Our Environment</h3>
+            <p class="text-white/40 text-sm leading-relaxed">With 340 km² of lush rainforests, pristine coastlines, and volcanic highlands, our island government is dedicated to preserving 60% of land as protected reserves.</p>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="text-center bg-white/[0.02] border border-white/[0.05] rounded-xl p-5">
+            <p class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-verdant-300 to-verdant-400 bg-clip-text text-transparent">148K</p>
+            <p class="text-xs text-white/40 mt-1 uppercase tracking-wider">Residents</p>
+          </div>
+          <div class="text-center bg-white/[0.02] border border-white/[0.05] rounded-xl p-5">
+            <p class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-ocean-300 to-ocean-400 bg-clip-text text-transparent">12</p>
+            <p class="text-xs text-white/40 mt-1 uppercase tracking-wider">Districts</p>
+          </div>
+          <div class="text-center bg-white/[0.02] border border-white/[0.05] rounded-xl p-5">
+            <p class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-sand-300 to-sand-400 bg-clip-text text-transparent">340</p>
+            <p class="text-xs text-white/40 mt-1 uppercase tracking-wider">km² Area</p>
+          </div>
+          <div class="text-center bg-white/[0.02] border border-white/[0.05] rounded-xl p-5">
+            <p class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-verdant-300 to-ocean-400 bg-clip-text text-transparent">62</p>
+            <p class="text-xs text-white/40 mt-1 uppercase tracking-wider">Years of Service</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="py-16 sm:py-24 bg-[#0a1f12] relative overflow-hidden">
+      <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-verdant-600/5 rounded-full blur-[120px]"></div>
+      </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div class="text-center mb-12 sm:mb-16">
+          <p class="text-xs uppercase tracking-widest text-ocean-400 font-semibold mb-3">Get In Touch</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Contact Us</h2>
+          <p class="text-white/50 max-w-2xl mx-auto text-base sm:text-lg font-light">Our departments are here to assist you. Reach out through any of the channels below.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="w-10 h-10 rounded-lg bg-verdant-500/10 flex items-center justify-center mb-4">
+              <i data-lucide="map-pin" class="w-5 h-5 text-verdant-400"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-1">Main Office</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Government Plaza, Building A<br>Coral Bay, Verdant Island V1001</p>
+          </div>
+
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="w-10 h-10 rounded-lg bg-ocean-500/10 flex items-center justify-center mb-4">
+              <i data-lucide="phone" class="w-5 h-5 text-ocean-400"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-1">Phone</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Main: +1 (555) 420-0001<br>Emergency: 911<br>Citizens' Hotline: 311</p>
+          </div>
+
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="w-10 h-10 rounded-lg bg-sand-400/10 flex items-center justify-center mb-4">
+              <i data-lucide="mail" class="w-5 h-5 text-sand-400"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-1">Email</h3>
+            <p class="text-white/40 text-sm leading-relaxed">General: info@verdantisland.gov<br>Support: help@verdantisland.gov</p>
+          </div>
+
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="w-10 h-10 rounded-lg bg-verdant-500/10 flex items-center justify-center mb-4">
+              <i data-lucide="clock" class="w-5 h-5 text-verdant-400"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-1">Office Hours</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Mon–Fri: 8:00 AM – 5:00 PM<br>Sat: 9:00 AM – 1:00 PM<br>Sun & Holidays: Closed</p>
+          </div>
+
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="w-10 h-10 rounded-lg bg-ocean-500/10 flex items-center justify-center mb-4">
+              <i data-lucide="globe" class="w-5 h-5 text-ocean-400"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-1">Online Portal</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Access all digital services 24/7 at<br>services.verdantisland.gov</p>
+          </div>
+
+          <div class="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
+            <div class="w-10 h-10 rounded-lg bg-sand-400/10 flex items-center justify-center mb-4">
+              <i data-lucide="message-circle" class="w-5 h-5 text-sand-400"></i>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-1">Live Chat</h3>
+            <p class="text-white/40 text-sm leading-relaxed">Chat with an agent<br>Mon–Fri: 8AM – 8PM<br>Sat: 9AM – 5PM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#050f09] border-t border-white/[0.05]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
+        <!-- Branding -->
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-verdant-400 to-ocean-500 flex items-center justify-center">
+              <i data-lucide="palmtree" class="w-5 h-5 text-white"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-white">Verdant Island</h3>
+              <p class="text-[10px] text-white/40 uppercase tracking-widest">Government Portal</p>
+            </div>
+          </div>
+          <p class="text-sm text-white/30 leading-relaxed max-w-md">The official digital gateway to the Government of Verdant Island. Providing transparent, accessible, and efficient public services to all citizens and visitors.</p>
+          <div class="flex gap-3 mt-5">
+            <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-verdant-400 hover:border-verdant-500/30 transition-all duration-200">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-ocean-400 hover:border-ocean-500/30 transition-all duration-200">
+              <i data-lucide="twitter" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-sand-400 hover:border-sand-400/30 transition-all duration-200">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-verdant-400 hover:border-verdant-500/30 transition-all duration-200">
+              <i data-lucide="youtube" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#" onclick="goHome(event)" class="text-sm text-white/30 hover:text-verdant-400 transition-colors duration-200">Home</a></li>
+            <li><a href="#about-section" class="text-sm text-white/30 hover:text-verdant-400 transition-colors duration-200">About Verdant Island</a></li>
+            <li><a href="#contact-section" class="text-sm text-white/30 hover:text-verdant-400 transition-colors duration-200">Contact Us</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-verdant-400 transition-colors duration-200">Privacy Policy</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-verdant-400 transition-colors duration-200">Terms of Service</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-verdant-400 transition-colors duration-200">Accessibility</a></li>
+          </ul>
+        </div>
+
+        <!-- Departments -->
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-4">Departments</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-sm text-white/30 hover:text-ocean-400 transition-colors duration-200">Health & Wellness</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-ocean-400 transition-colors duration-200">Education</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-ocean-400 transition-colors duration-200">Public Safety</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-ocean-400 transition-colors duration-200">Infrastructure</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-ocean-400 transition-colors duration-200">Environment</a></li>
+            <li><a href="#" class="text-sm text-white/30 hover:text-ocean-400 transition-colors duration-200">Finance & Revenue</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="mt-10 pt-6 border-t border-white/[0.05] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-xs text-white/25">&copy; 2025 Government of Verdant Island. All rights reserved.</p>
+        <p class="text-xs text-white/25 flex items-center gap-1">
+          Made with <i data-lucide="heart" class="w-3 h-3 text-verdant-500 inline"></i> for the people of Verdant Island
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+<script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
 </html>

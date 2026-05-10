@@ -1,28 +1,178 @@
-body {
-	padding: 2rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #071a0e;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.5);
 }
 
-h1 {
-	font-size: 16px;
-	margin-top: 0;
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
 
-p {
-	color: rgb(107, 114, 128);
-	font-size: 15px;
-	margin-bottom: 10px;
-	margin-top: 5px;
+/* Selection */
+::selection {
+  background: rgba(34, 197, 94, 0.3);
+  color: #fff;
 }
 
-.card {
-	max-width: 620px;
-	margin: 0 auto;
-	padding: 16px;
-	border: 1px solid lightgray;
-	border-radius: 16px;
+/* Animated Gradient Orbs */
+.orb-1 {
+  top: -10%;
+  left: -10%;
+  animation: orbFloat1 20s ease-in-out infinite;
+}
+.orb-2 {
+  top: 40%;
+  right: -15%;
+  animation: orbFloat2 25s ease-in-out infinite;
+}
+.orb-3 {
+  bottom: -10%;
+  left: 30%;
+  animation: orbFloat3 18s ease-in-out infinite;
 }
 
-.card p:last-child {
-	margin-bottom: 0;
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(80px, 50px) scale(1.1); }
+  50% { transform: translate(30px, 100px) scale(0.95); }
+  75% { transform: translate(-40px, 40px) scale(1.05); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-60px, -40px) scale(1.05); }
+  50% { transform: translate(-100px, 30px) scale(0.9); }
+  75% { transform: translate(20px, -50px) scale(1.1); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(50px, -60px) scale(1.08); }
+  50% { transform: translate(-30px, -30px) scale(0.95); }
+  75% { transform: translate(60px, 20px) scale(1.02); }
+}
+
+/* Floating Particles */
+.particle-1 {
+  top: 20%;
+  left: 10%;
+  animation: particleDrift 12s ease-in-out infinite;
+}
+.particle-2 {
+  top: 60%;
+  right: 15%;
+  animation: particleDrift 16s ease-in-out infinite 2s;
+}
+.particle-3 {
+  top: 35%;
+  right: 30%;
+  animation: particleDrift 10s ease-in-out infinite 4s;
+}
+.particle-4 {
+  bottom: 25%;
+  left: 20%;
+  animation: particleDrift 14s ease-in-out infinite 1s;
+}
+.particle-5 {
+  top: 15%;
+  left: 55%;
+  animation: particleDrift 18s ease-in-out infinite 3s;
+}
+
+@keyframes particleDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  25% { transform: translate(20px, -30px) scale(1.2); opacity: 0.8; }
+  50% { transform: translate(-15px, -50px) scale(0.8); opacity: 0.3; }
+  75% { transform: translate(25px, -20px) scale(1.1); opacity: 0.6; }
+}
+
+/* Result Card Animations */
+.result-card {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: resultSlideIn 0.4s ease forwards;
+}
+
+@keyframes resultSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navbar scroll state */
+#navbar.scrolled {
+  background: rgba(5, 46, 22, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile menu animation */
+#mobile-menu.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Focus ring */
+input:focus-visible {
+  outline: none;
+}
+
+/* Quick chip press effect */
+.quick-chip:active {
+  transform: scale(0.96);
+}
+
+/* Category badge colors */
+.badge-health { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border-color: rgba(239, 68, 68, 0.2); }
+.badge-transport { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.2); }
+.badge-business { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border-color: rgba(245, 158, 11, 0.2); }
+.badge-tax { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.2); }
+.badge-education { background: rgba(14, 165, 233, 0.15); color: #7dd3fc; border-color: rgba(14, 165, 233, 0.2); }
+.badge-environment { background: rgba(34, 197, 94, 0.15); color: #86efac; border-color: rgba(34, 197, 94, 0.2); }
+.badge-housing { background: rgba(236, 72, 153, 0.15); color: #f9a8d4; border-color: rgba(236, 72, 153, 0.2); }
+.badge-legal { background: rgba(107, 114, 128, 0.15); color: #d1d5db; border-color: rgba(107, 114, 128, 0.2); }
+.badge-employment { background: rgba(249, 115, 22, 0.15); color: #fdba74; border-color: rgba(249, 115, 22, 0.2); }
+.badge-civic { background: rgba(20, 184, 166, 0.15); color: #5eead4; border-color: rgba(20, 184, 166, 0.2); }
+.badge-infrastructure { background: rgba(234, 179, 8, 0.15); color: #fde047; border-color: rgba(234, 179, 8, 0.2); }
+.badge-safety { background: rgba(244, 63, 94, 0.15); color: #fda4af; border-color: rgba(244, 63, 94, 0.2); }
+.badge-family { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-color: rgba(139, 92, 246, 0.2); }
+.badge-tourism { background: rgba(6, 182, 212, 0.15); color: #67e8f9; border-color: rgba(6, 182, 212, 0.2); }
+.badge-social { background: rgba(236, 72, 153, 0.15); color: #f9a8d4; border-color: rgba(236, 72, 153, 0.2); }
+
+/* Result card hover line */
+.result-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+.result-card:hover::before {
+  background: linear-gradient(to bottom, #22c55e, #0ea5e9);
+}
+
+/* Pulse for search icon */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Smooth page transitions */
+#home-view, #results-view {
+  transition: opacity 0.3s ease;
 }
