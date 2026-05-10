@@ -21,7 +21,7 @@ jobs:
       - name: Checkout specific commit
         run: |
           cd /tmp/hf-space
-          git checkout 2c2f832de0d9f28337f4fa3ff4225ca964f3b313
+          git checkout 2461c8c19a4994d563f325d9b07e81b1ef6e5234
 
       - name: Copy files
         run: |
@@ -36,7 +36,7 @@ jobs:
 
           git add .
 
-          git commit -m "Clone HF Space at commit 2c2f832"
+          git commit -m "Clone HF Space at commit 2461c8c"
 
       - name: Push to GitHub
         run: |
