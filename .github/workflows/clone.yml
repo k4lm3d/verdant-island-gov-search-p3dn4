@@ -1,0 +1,43 @@
+name: Clone Hugging Face Space
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clone:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clone HF Space
+        run: |
+          git clone https://huggingface.co/spaces/verdant-island/verdant-island-gov-search-p3dn4 /tmp/hf-space
+
+      - name: Checkout specific commit
+        run: |
+          cd /tmp/hf-space
+          git checkout 5af10b3419014520b0ccdc4f151deb7e8787044c
+
+      - name: Copy files
+        run: |
+          rsync -av \
+            --exclude='.git' \
+            /tmp/hf-space/ ./
+
+      - name: Commit files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add .
+
+          git commit -m "Clone HF Space at commit 5af10b3"
+
+      - name: Push to GitHub
+        run: |
+          git push
