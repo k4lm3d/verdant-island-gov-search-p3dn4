@@ -1,5 +1,5 @@
-// ========================
-// MOCK DATA - Government Services Database
+======= ========================
+======= MOCK DATA - Government Services Database
 // ========================
 const governmentData = [
   {
@@ -444,11 +444,12 @@ function renderResults(results, query) {
   resultsCount.textContent = `${results.length} ${plural} found`;
   
   resultsList.innerHTML = results.map((item, index) => {
-    const icon = categoryIcons[item.category] || 'file-text';
+    const icon = (typeof getCategoryIcon === 'function') ? getCategoryIcon(item.category) : (categoryIcons[item.category] || 'file-text');
     const badge = categoryBadge[item.category] || 'badge-civic';
+    const itemUrl = item.url || `item.html?id=${item.id}`;
     
     return `
-      <a href="${item.url}" class="result-card group relative block bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 sm:p-5 hover:bg-white/[0.06] hover:border-verdant-500/20 transition-all duration-300 cursor-pointer" style="animation-delay: ${index * 60}ms">
+      <a href="${itemUrl}" class="result-card group relative block bg-white/[0.03] border border-white/[0.06] rounded-xl p-4 sm:p-5 hover:bg-white/[0.06] hover:border-verdant-500/20 transition-all duration-300 cursor-pointer" style="animation-delay: ${index * 60}ms">
         <div class="flex items-start gap-3 sm:gap-4">
           <div class="flex-shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-white/[0.05] border border-white/[0.08] flex items-center justify-center group-hover:border-verdant-500/20 transition-colors duration-300">
             <i data-lucide="${icon}" class="w-5 h-5 text-white/40 group-hover:text-verdant-400 transition-colors duration-300"></i>
